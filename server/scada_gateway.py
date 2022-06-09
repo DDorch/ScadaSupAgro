@@ -5,7 +5,7 @@ class ScadaGateway():
         self.dPrmG = dPrm['GATEWAY']
 
         from scada_misc import createLog
-        self.log = createLog(dPrm['LOGGER']['level'])
+        self.log = createLog(self.dPrmG['level'])
         self.log.info('Starting Scada Gateway')
 
         # Scheduled measurement
@@ -52,7 +52,7 @@ class ScadaGateway():
             import requests
             try:
                 r = requests.post(self.dPrmG['url'], json=self.dTelemetry)
-                self.log.debug("Request response: " + r.text)
+                self.log.info("Request response: " + r.text)
             except requests.exceptions.RequestException as e:
                 self.log.warning("Request post error: " + str(e))
         return self.dTelemetry

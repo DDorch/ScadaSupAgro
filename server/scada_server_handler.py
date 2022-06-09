@@ -12,7 +12,9 @@ class ScadaTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
 
         from scada_misc import getIniParameters
-        scada = ScadaHandler(self, getIniParameters("scada.ini"))
+        dPrm = getIniParameters("scada.ini")
+        self.request.settimeout(1)
+        scada = ScadaHandler(self, dPrm)
 
         while scada.bConnected:
             sRecv = ""
